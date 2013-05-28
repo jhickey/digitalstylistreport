@@ -1,12 +1,3 @@
-function getCampaign () {
-	jQuery.ajax({
-  	url : url_prefix + "get_current_campaign.php",
-  	success : function (data) {
-		jQuery('#current-campaign').html(data);
-	}
-  });
-}
-
 jQuery(document).ready(function(){
 	
 	jQuery('#loading-div').hide();
@@ -34,12 +25,8 @@ jQuery(document).ready(function(){
 		jQuery('#loading-div').hide()
         jQuery('button').removeAttr('disabled');
         jQuery('#fileDropTarget').html('');
-        getCampaign ();
         jQuery('#done-div').show();
         setInterval(function(){jQuery('#done-div').fadeOut('fast');},1000);
-    });
-    
-	getCampaign ();
-	
+    });	
 });
 

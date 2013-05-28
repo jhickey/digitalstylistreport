@@ -1,32 +1,29 @@
 <?php
-// Start a session, load the library
 session_start();
 require_once('tumblroauth/tumblroauth/tumblroauth.php');
 
-// Define the needed keys
+$ini_array = parse_ini_file("settings.ini");
+define("CONSUMER_KEY", $ini_array['consumer_key'] );
+define("CONSUMER_SECRET", $ini_array['consumer_secret']);
+define("OAUTH_TOKEN", $ini_array['oauth_token']);
+define("OAUTH_TOKEN_SECRET", $ini_array['oauth_token_secret']);
+define("BASE_HOSTNAME", $ini_array['base_hostname']);
+define("VOTE_PAGE", $ini_array['vote_page']);
 
-
-function create_post ($the_files, $the_file_name, $id){
-
-	$consumer_key = "BQBZcyujDME2DMgP5V7mUFo2FglhxYwk6jJy6BOTy5dflTODDf";
-	$consumer_secret = "S6PG7n0xjqAVjd9Iul0YACP6eky3tWLBTZeyUEMH1mGEZNExId";
-	$oauth_token = 'DF3Xhtbz7AUCK2ir3sXmB4Ua5MUvbRQJIwKsT0VMTzsH5X2Zi7';
-	$oauth_token_secret = 'n6M5acKONvGjS4Qf2aZe86MdpgkntqmxrZHGV1y1oOUVzL4CiZ';
-	$base_hostname = 'jhickeyiv.tumblr.com';
-
-	$post_URI = 'http://api.tumblr.com/v2/blog/'.$base_hostname.'/post';
-	$tum_oauth = new TumblrOAuth($consumer_key, $consumer_secret, $oauth_token, $oauth_token_secret);
+function create_post ($the_files){
+	$post_URI = 'http://api.tumblr.com/v2/blog/'.BASE_HOSTNAME.'/post';
+	$tum_oauth = new TumblrOAuth(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET);
 
 	$parameters = array();
 	$parameters['type'] = "photo";
-	$parameters['caption'] = "<a href='http://localhost:8888/digitalstylistnetwork/?page_id=7&i=$id' target='_blank'>Vote for this at digitalstylistnetwork</a>";
+	$parameters['caption'] = "<a href='".VOTE_PAGE."&i=$id' target='_blank'>Vote for this at digitalstylistreport</a>";
 	$parameters['data'] = $the_files;
 	
 	$post = $tum_oauth->post($post_URI,$parameters);
 	if (201 == $tum_oauth->http_code) {
-      $pic = json_decode(file_get_contents('http://api.tumblr.com/v2/blog/jhickeyiv.tumblr.com/posts/photo?api_key=BQBZcyujDME2DMgP5V7mUFo2FglhxYwk6jJy6BOTy5dflTODDf&id='.$post->response->id));
+      $pic = json_decode(file_get_contents('http://api.tumblr.com/v2/blog/'.BASE_HOSTNAME.'/posts/photo?api_key='.CONSUMER_KEY.'&id='.$post->response->id));
 	  $the_pic_url = $pic->response->posts[0]->photos[0]->alt_sizes[0]->url;
-      $query = "INSERT INTO wp_mcr_batches (post_id, pic_url, time) VALUES ('".$id."','".$the_pic_url."', '".date("Y-m-d h:i:s")."')";
+      $query = "INSERT INTO wp_files (url, date) VALUES ('$the_pic_url', '".date("Y-m-d h:i:s")."')";
 	  mysql_query($query);
 	} else {
 	  die('error');

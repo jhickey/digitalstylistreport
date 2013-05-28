@@ -185,7 +185,9 @@ button{
 .span6{
 	float: left;
 	width: 50%;
-	margin-top: 50px;
+}
+#current-campaign{
+	margin-top: 46px;
 }
 .batch-pic{
 	width: 100px;
