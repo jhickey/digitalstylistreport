@@ -24,7 +24,7 @@ function mcrResults($content) {
 		if (isset($user) && isset($image)){
 			$user_count = $wpdb->get_var("SELECT COUNT(*) FROM $table where user = '$user' and image_id = '$image'");
 			if ($user_count == 0) {
-				$wpdb->insert($table, array('user' => $user ,'image_id' => $image, 'time' => date("Y-m-d h:i:s")));
+				$wpdb->insert($table, array('user' => $user ,'image_id' => $image, 'time' => time()));
 				print 'Congratulations - your vote has been counted.';
 			}
 			else
@@ -37,8 +37,8 @@ function mcrResults($content) {
 		$date = $imageArray[0];	
 		
 		$results = array();	
-		$batch = $wpdb->get_var("SELECT option_value FROM wp_mcr_votes_data WHERE option_name = 'current_batch'");
-		$pic_arrays = $wpdb->get_col("SELECT id FROM wp_files WHERE batch = '$batch'");
+		$current_time = time();
+		$pic_arrays = $wpdb->get_col("SELECT id FROM wp_files WHERE time > ($current_time - 86400)");
 		foreach ($pic_arrays as $pics) {
  			$results[$pics] = $wpdb->get_var("SELECT COUNT(*) FROM $table where image_id = '$pics'");
  		}

@@ -23,7 +23,7 @@ function create_post ($the_files){
 	if (201 == $tum_oauth->http_code) {
       $pic = json_decode(file_get_contents('http://api.tumblr.com/v2/blog/'.BASE_HOSTNAME.'/posts/photo?api_key='.CONSUMER_KEY.'&id='.$post->response->id));
 	  $the_pic_url = $pic->response->posts[0]->photos[0]->alt_sizes[0]->url;
-      $query = "INSERT INTO wp_files (url, date) VALUES ('$the_pic_url', '".date("Y-m-d h:i:s")."')";
+      $query = "INSERT INTO wp_files (url, time) VALUES ('$the_pic_url', '".time()."')";
 	  mysql_query($query);
 	} else {
 	  die('error');
