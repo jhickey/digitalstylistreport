@@ -1,0 +1,15 @@
+/* @override 
+	http://localhost:8888/digitalstylistnetwork/wp-content/plugins/mcrPlugin/vote.css?ver=3.5.1 */
+.left{
+	float: left;
+	margin-top: 10px;
+	min-width: 100px;
+}
+.fill{
+	height: 30px;
+	background-color: #2e2f2e;
+	float: left;
+	margin-top: 6px;
+	border-style: solid;
+	border-width: 2px;
+}
