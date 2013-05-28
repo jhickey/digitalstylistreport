@@ -37,11 +37,5 @@ function render_plugin(){
 					<div id="loading-div">Uploading, please wait. <img src="'.plugins_url('mcr/img/ajax-loader.gif').'" /></div>
 					<div id="done-div">Upload is complete!</div>
             	</div>
-            	<div class="span6" id="current-campaign">';
-            	
-
-	
-	echo   	'</div>
-			<button class="btn">Send Campaign</button>
             </div>';
 }
