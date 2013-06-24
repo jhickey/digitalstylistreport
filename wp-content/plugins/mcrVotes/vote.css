@@ -1,0 +1,25 @@
+/* @override 
+	http://localhost:8888/digitalstylistnetwork/wp-content/plugins/mcrPlugin/vote.css?ver=3.5.1
+	http://199.195.249.67/digitalstylistreport/wp-content/plugins/mcrPlugin/vote.css?ver=3.5.1 */
+.left{
+	float: left;
+	margin-top: 4px;
+	margin-right: 6px;
+}
+.fill{
+	height: 30px;
+	background-color: #2e2f2e;
+	float: left;
+	margin-top: 6px;
+	border-style: solid;
+	border-width: 2px;
+}
+.count{
+	padding-top: 14px;
+	float: left;
+	padding-left: 6px;
+}
+
+#results div.vote-row div.left img {
+	width: 60px;
+}
