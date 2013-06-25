@@ -1,5 +1,3 @@
-/* @override http://localhost:8888/digitalstylistreport/wp-content/themes/twentytwelve/style.css?ver=3.5.1 */
-
 /*
 Theme Name: Twenty Twelve
 Theme URI: http://wordpress.org/extend/themes/twentytwelve
@@ -177,9 +175,6 @@ img {
 	content: "";
 }
 
-#site-navigation {
-		display: none;
-}
 
 /* =Repeatable patterns
 -------------------------------------------------------------- */
@@ -367,7 +362,7 @@ img.header-image,
 img.wp-post-image {
 	/* Add fancy borders to all WordPress-added images but not things like badges and icons and the like */
 	border-radius: 3px;
-	//box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 .wp-caption {
 	max-width: 100%; /* Keep wide captions from overflowing their container. */
@@ -489,16 +484,16 @@ html {
 body {
 	font-size: 14px;
 	font-size: 1rem;
-	"font-family:'Times', serif;
+	font-family: Helvetica, Arial, sans-serif;
 	text-rendering: optimizeLegibility;
 	color: #444;
 }
 body.custom-font-enabled {
-	"font-family:'Times', serif;
+	font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }
 a {
 	outline: none;
-	color: #000000;
+	color: #21759b;
 }
 a:hover {
 	color: #0f3647;
@@ -544,8 +539,8 @@ a:hover {
 
 /* Header */
 .site-header {
-	padding-top: 1.714285714rem;
-	padding-bottom: 1.714285714rem;
+	padding: 24px 0;
+	padding: 1.714285714rem 0;
 }
 .site-header h1,
 .site-header h2 {
@@ -576,6 +571,7 @@ a:hover {
 	color: #757575;
 }
 .header-image {
+	margin-top: 24px;
 	margin-top: 1.714285714rem;
 }
 
@@ -849,7 +845,7 @@ article.sticky .featured-post {
 }
 .entry-content code,
 .comment-content code {
-	"font-family:'Times', serif;
+	font-family: Consolas, Monaco, Lucida Console, monospace;
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 2;
@@ -858,7 +854,7 @@ article.sticky .featured-post {
 .comment-content pre {
 	border: 1px solid #ededed;
 	color: #666;
-	font-family:'Times', serif;
+	font-family: Consolas, Monaco, Lucida Console, monospace;
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 1.714285714;
@@ -1599,7 +1595,7 @@ img#wpstats {
 		margin-top: 3.428571429rem;
 		margin-bottom: 48px;
 		margin-bottom: 3.428571429rem;
-		//box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+		box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
 	}
 	body.custom-background-empty {
 		background-color: #fff;
@@ -1645,8 +1641,9 @@ img#wpstats {
 		position: relative !important;
 	}
 	.site-header {
+		margin-bottom: 72px;
 		margin-bottom: 5.142857143rem;
-		position: relative;
+		text-align: left;
 	}
 	.site-header h1 {
 		font-size: 21pt;

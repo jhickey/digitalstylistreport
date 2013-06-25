@@ -5,7 +5,11 @@ require_once('mysql_connect.php');
 require_once('tumblr_post.php');
 
 $files =$_FILES;
-var_dump($files);
+
+$path = "/Users/jameshickey/Projects/digitalstylistreport/wp-content/uploads/current/";
+if (!file_exists($path)) {
+    mkdir($path);
+}
 
 if (isset($files))
 {
@@ -14,10 +18,10 @@ if (isset($files))
 	foreach ($files as $file)
 	{
 		$the_file = file_get_contents($file["tmp_name"]);
-		$the_files[] = $the_file;		
-	}	
-	create_post($the_files);
-}		
+		file_put_contents($path.$file["name"], $the_file);
+	}
+	var_dump($files);
+}
 else
 {
 	echo 'no files';
