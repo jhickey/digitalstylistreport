@@ -1,5 +1,7 @@
 /* @override http://localhost:8888/digitalstylistreport/wp-content/themes/twentytwelve/style.css?ver=3.5.1 */
 
+/* @override http://localhost:8888/digitalstylistreport/wp-content/themes/twentytwelve/style.css?ver=3.5.1 */
+
 /*
 Theme Name: Twenty Twelve
 Theme URI: http://wordpress.org/extend/themes/twentytwelve
@@ -487,14 +489,14 @@ html {
 	font-size: 87.5%;
 }
 body {
-	font-size: 14px;
-	font-size: 1rem;
-	"font-family:'Times', serif;
+	"
 	text-rendering: optimizeLegibility;
 	color: #444;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 }
 body.custom-font-enabled {
-	"font-family:'Times', serif;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 }
 a {
 	outline: none;
@@ -849,7 +851,7 @@ article.sticky .featured-post {
 }
 .entry-content code,
 .comment-content code {
-	"font-family:'Times', serif;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 2;
@@ -858,7 +860,7 @@ article.sticky .featured-post {
 .comment-content pre {
 	border: 1px solid #ededed;
 	color: #666;
-	font-family:'Times', serif;
+	font-family:'Helvetica';
 	font-size: 12px;
 	font-size: 0.857142857rem;
 	line-height: 1.714285714;

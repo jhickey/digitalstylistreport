@@ -1,4 +1,4 @@
-<?
+<?php
  /*
    Plugin Name: Branderati MCR Voting Receiver
    Plugin URI: http://branderati.com
@@ -64,14 +64,14 @@ function mcrResults($content) {
 
 		?>
 		<br /><br />
-		<div id="results"><? foreach ($pic_arrays as $pics) {
+		<div id="results"><?php foreach ($pic_arrays as $pics) {
 			$id = $pics->id;
 			$url = $pics->url;
 		?>
 			<div class='vote-row'>
-				<div class="left"><img src="<?=$url ?>" /></div>
+				<div class="left"><img src="<?php echo $url; ?>" /></div>
 				<div class="right">
-					<div class="fill" style="width:<?=($results[$id] * $multiplier)?>px;<?=(($results[$id]!=0 && $results[$id] == $most)?'background:#F63641':'')?>">
+					<div class="fill" style="width:<?php echo ($results[$id] * $multiplier); ?>px;<?php echo (($results[$id]!=0 && $results[$id] == $most)?'background:#F63641':'');?>">
 					</div>
 					<div class="count">
 						<?=$results[$id].($results[$id] == 1 ? ' Vote' : ' Votes')?>
@@ -79,11 +79,11 @@ function mcrResults($content) {
 				</div>
 				<div style="clear:both;"></div>
 			</div>
-				<? } ?>
+				<?php } ?>
 
 		</div>
 
-<?
+<?php
 	}
 
 }
