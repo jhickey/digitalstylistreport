@@ -26,7 +26,7 @@ function mcrResults($content) {
 		$files_table = "wp_mcr_files";
 		global $wpdb;
 		//get user name or use ip address if username is not available
-		$user = $_GET["u"] ?: $_SERVER["REMOTE_ADDR"];
+		$user = ($_GET["u"] == '-email-'? $_SERVER["REMOTE_ADDR"] : $_GET["u"]);
 		$image = $_GET["i"];
 		if (isset($user) && isset($image)){
 
