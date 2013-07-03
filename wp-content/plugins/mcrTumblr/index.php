@@ -37,7 +37,7 @@ function render_plugin(){
             		<h3 class="drop-text">Drag photos here to upload to tumblr.</h3>
 					<div id="fileDropTarget" class="dropzone-previews">
 					</div>
-					<button class="btn" id="btn-preview">Preview</button><br />
+					<br />
 
 						<button id="submit_button">Publish</button>
 						<input type="hidden" name="publish", value="true"/>

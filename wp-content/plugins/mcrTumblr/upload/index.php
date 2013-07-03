@@ -13,16 +13,23 @@ if (!file_exists($path)) {
 
 if (isset($files))
 {
+	        xdebug_break();
 	dbconnect();
 	$the_files = array();
+	$i = 0;
 	foreach ($files as $file)
 	{
 		$the_file = file_get_contents($file["tmp_name"]);
-		file_put_contents($path.$file["name"], $the_file);
+		file_put_contents($path.microtime().'-'.$file["name"], $the_file);
+		$i++;
 	}
-	var_dump($files);
 }
-else
+if (isset($_GET['delete']))
 {
-	echo 'no files';
+	$files = glob($path.'*'); // get all file names
+	foreach($files as $file){
+	echo $files; // iterate files
+ 	if(is_file($file))
+    	unlink($file); // delete file
+	}
 }
