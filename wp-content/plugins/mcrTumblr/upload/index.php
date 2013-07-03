@@ -13,7 +13,7 @@ if (!file_exists($path)) {
 
 if (isset($files))
 {
-	        xdebug_break();
+	$orderList = json_decode($_POST['json']);
 	dbconnect();
 	$the_files = array();
 	$i = 0;

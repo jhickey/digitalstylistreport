@@ -29,8 +29,7 @@ jQuery(document).ready(function(){
 		parallelUploads: 1000,
 		sending: function (file, xhr, formData)
 		{
-			formData.append("array", fileOrderData);
-			console.log(xhr);
+			formData.append("json", JSON.stringify(fileOrderData));
 		}
 	});
 
