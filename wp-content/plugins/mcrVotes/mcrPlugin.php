@@ -18,7 +18,7 @@ function mcrResults($content) {
 
 	wp_register_style( 'vote-style', plugins_url('vote.css', __FILE__) );
 	wp_enqueue_style( 'vote-style' );
-
+	$home = home_url();
 	//page must be named 'Vote'
 	if (!is_admin() && $content->post_title == 'Vote')
 	{
@@ -78,7 +78,7 @@ function mcrResults($content) {
 			$post = $pics->post;
 		?>
 			<div class='vote-row'>
-				<div class="left"><a href="http://localhost:8888/mcr/?p=<?php echo $post ?>"><img src="<?php echo $url; ?>" /></a></div>
+				<div class="left"><a href="<?php echo $home ?>/?p=<?php echo $post ?>"><img src="<?php echo $url; ?>" /></a></div>
 				<div class="right">
 					<div class="fill" style="width:<?php echo ($results[$id] * $multiplier); ?>px;<?php echo (($results[$id]!=0 && $results[$id] == $most)?'background:#F63641':'');?>">
 					</div>

@@ -1,8 +1,4 @@
 <?php
-//grab the files and send them to tumblr
-require_once('mysql_connect.php');
-
-require_once('tumblr_post.php');
 
 $files =$_FILES;
 
@@ -14,7 +10,6 @@ if (!file_exists($path)) {
 if (isset($files))
 {
 	$orderList = json_decode($_POST['json'], true);
-	dbconnect();
 	$the_files = array();
 	$i = 0;
 	foreach ($files as $file)

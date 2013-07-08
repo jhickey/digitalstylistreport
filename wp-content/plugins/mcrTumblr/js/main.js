@@ -10,15 +10,12 @@ jQuery(document).ready(function(){
 	jQuery('#loading-div').hide();
 	jQuery('#done-div').hide();
 
-	// jQuery('#btn-publish').click(function (){
-	// 	myDropzone.processQueue();
-	// });
 	jQuery('#btn-clear').click(function (){
 		var r = confirm("Are you sure you want to remove all photos?");
 		if (r === true)
 		{
 			myDropzone.removeAllFiles();
-			jQuery.get('http://localhost:8888/mcr/wp-content/plugins/mcrTumblr/upload/index.php?delete=true');
+			jQuery.get('../upload/index.php?delete=true');
 		}
 	});
 
