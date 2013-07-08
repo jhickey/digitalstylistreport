@@ -5,20 +5,33 @@ require_once('mysql_connect.php');
 require_once('tumblr_post.php');
 
 $files =$_FILES;
-var_dump($files);
+
+$path = "/Users/jameshickey/Projects/mcr/wp-content/uploads/current/";
+if (!file_exists($path)) {
+    mkdir($path);
+}
 
 if (isset($files))
 {
+	$orderList = json_decode($_POST['json'], true);
 	dbconnect();
 	$the_files = array();
+	$i = 0;
 	foreach ($files as $file)
 	{
+		$key = array_search($file["name"], $orderList);
+		echo $key;
 		$the_file = file_get_contents($file["tmp_name"]);
-		$the_files[] = $the_file;		
-	}	
-	create_post($the_files);
-}		
-else
+		file_put_contents($path.$key.'-'.$file["name"], $the_file);
+		$i++;
+	}
+}
+if (isset($_GET['delete']))
 {
-	echo 'no files';
+	$files = glob($path.'*'); // get all file names
+	foreach($files as $file){
+	echo $files; // iterate files
+ 	if(is_file($file))
+    	unlink($file); // delete file
+	}
 }
