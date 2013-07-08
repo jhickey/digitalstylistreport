@@ -12,12 +12,13 @@
 add_action( 'admin_menu', 'tumblr_upload' );
 
 function tumblr_upload (){
-	add_options_page( 'Tumblr Upload Options', 'MCR Upload', 'manage_options', 'tumblr-upload-plugin', 'render_plugin' );
+	add_options_page( 'MCR Upload Options', 'MCR Upload', 'manage_options', 'tumblr-upload-plugin', 'render_plugin' );
 
 }
 
 function render_plugin(){
 	wp_enqueue_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
+	wp_enqueue_script('jqueryui',  plugins_url('js/vendor/jquery-ui-1.10.3.custom.min.js', __FILE__));
 	wp_enqueue_script('dropzone',  plugins_url('js/vendor/dropzone.js', __FILE__));
 	wp_enqueue_script('main', plugins_url('js/main.js', __FILE__));
 	$home = home_url();
@@ -32,7 +33,7 @@ function render_plugin(){
             		<p>Email content</p>
             		<textarea name="email_header"></textarea>
             		<h3 class="drop-text">Drag photos into this window.</h3>
-					<div id="fileDropTarget" class="dropzone-previews">
+					<div id="fileDropTarget" class="dropzone-previews sortable">
 					</div>
 					<br />
 
@@ -45,9 +46,11 @@ function render_plugin(){
             	</div>
             </form>
           </div>';
+     xdebug_break();
     if( isset($_POST['publish']))
     {
     	global $wpdb;
+
     	$the_post = $_POST;
     	$upload_dir = wp_upload_dir();
     	$the_time = time();
@@ -55,7 +58,6 @@ function render_plugin(){
     	$old_vote_page = get_page_by_title( 'Vote' );
 		$vote_id = $old_vote_page->ID;
 		$the_files = directoryToArray('current', $the_time, $the_base);
-
 		$html = "<html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -106,7 +108,7 @@ function render_plugin(){
 			$html.="</td>
         </tr>
     </table>
-    <a href='http://example.com'>unsubscribe</a>
+    <a href='http://localhost:8888/mail/public/unsubscribe/-email-'>Unsubscribe</a>
 </body>
 </html>
 ";

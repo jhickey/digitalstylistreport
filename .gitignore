@@ -17,3 +17,5 @@ xcuserdata
 .svn
 CVS
 # wp-content/plugins/mcr/upload/settings.ini
+wp-content/plugins/mcr/uploads/*
+wp-config.php
