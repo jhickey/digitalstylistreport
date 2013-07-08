@@ -6,7 +6,7 @@ function submitForm(){
 }
 
 jQuery(document).ready(function(){
-	jQuery.get('http://localhost:8888/digitalstylistreport/wp-content/plugins/mcrTumblr/upload/index.php?delete=true');
+	//jQuery.get('http://localhost:8888/digitalstylistreport/wp-content/plugins/mcrTumblr/upload/index.php?delete=true');
 	jQuery('#loading-div').hide();
 	jQuery('#done-div').hide();
 
@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
 		if (r === true)
 		{
 			myDropzone.removeAllFiles();
-			jQuery.get('http://localhost:8888/digitalstylistreport/wp-content/plugins/mcrTumblr/upload/index.php?delete=true');
+			jQuery.get('http://localhost:8888/mcr/wp-content/plugins/mcrTumblr/upload/index.php?delete=true');
 		}
 	});
 
@@ -35,8 +35,9 @@ jQuery(document).ready(function(){
 
 	myDropzone.on("addedfile", function(file) {
 		fileOrder.push(file.name);
-		jQuery(file.previewElement).append('<input type="text" name="sub_'+ file.name +'"/>');
-		jQuery(file.previewElement).append('<br><textarea name="body_'+ file.name +'"/></textarea>');
+		console.log(fileOrder);
+		jQuery(file.previewElement).append('<input type="text" name="sub_'+(fileOrder.length-1)+'-'+file.name +'"/>');
+		jQuery(file.previewElement).append('<br><textarea name="body_'+(fileOrder.length-1)+'-'+file.name +'"/></textarea>');
 	});
 
 	myDropzone.on("sending", function(file) {
@@ -49,6 +50,7 @@ jQuery(document).ready(function(){
         //jQuery('#fileDropTarget').html('');
         jQuery('#done-div').show();
         setInterval(function(){jQuery('#done-div').fadeOut('fast');},1000);
+        submitForm();
     });
     myDropzone.on("error", function(file) {
 			alert('error!');

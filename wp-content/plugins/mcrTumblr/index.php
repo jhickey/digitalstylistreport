@@ -34,7 +34,7 @@ function render_plugin(){
             		<input type="text" name="subject"/>
             		<p>Email content</p>
             		<textarea name="email_header"></textarea>
-            		<h3 class="drop-text">Drag photos here to upload to tumblr.</h3>
+            		<h3 class="drop-text">Drag photos into this window.</h3>
 					<div id="fileDropTarget" class="dropzone-previews">
 					</div>
 					<br />
@@ -58,6 +58,7 @@ function render_plugin(){
     	$old_vote_page = get_page_by_title( 'Vote' );
 		$vote_id = $old_vote_page->ID;
 		$the_files = directoryToArray('current', $the_time, $the_base);
+
 		$html = "<html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -77,15 +78,16 @@ function render_plugin(){
         </tr>
         <tr>
             <td>
-				<img src='http://localhost:8888/digitalstylistreport/wp-content/uploads/1372362969/mcr_jpg' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
+				<img src='http://localhost:8888/mcr.jpg' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
                 <div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px; margin-bottom: 25px;'><br>".$the_post['email_header']."</div>";
 		$i = 1;
 		foreach ($the_files as $value) {
 			$url = $upload_dir['baseurl'].'/'.$the_time.'/'.$value;
 			$wpdb->query("INSERT INTO wp_mcr_files (url, time) VALUES ('$url', '$the_time')");
+			$the_id = $wpdb->insert_id;
 			$my_post = array(
 				'post_title'    => $the_post["sub_".$value],
-				'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br><a href="'.home_url().'?page_id='.$vote_id.'&i='.$wpdb->insert_id.'&u=-email-" target="_blank">Vote for this!</a>',
+				'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br><a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a>',
 				'post_status'   => 'publish',
 				'post_author'   => 1,
 			);
@@ -93,7 +95,8 @@ function render_plugin(){
                     <p class='title' style='width:100%; float:left; border-bottom:4px solid #292929;'>
                         <span class='count' style='font-size:20px;'>".$i.".</span> ".$my_post['post_title']."</p>
                     ".$my_post['post_content']."</div>";
-			wp_insert_post($my_post);
+			$post_id = wp_insert_post($my_post);
+			$wpdb->query("UPDATE wp_mcr_files set post='$post_id' WHERE id='$the_id'");
 			$i++;
     	}
     		$old_vote_page = get_page_by_title( 'Vote' );

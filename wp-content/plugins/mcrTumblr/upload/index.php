@@ -6,21 +6,23 @@ require_once('tumblr_post.php');
 
 $files =$_FILES;
 
-$path = "/Users/jameshickey/Projects/digitalstylistreport/wp-content/uploads/current/";
+$path = "/Users/jameshickey/Projects/mcr/wp-content/uploads/current/";
 if (!file_exists($path)) {
     mkdir($path);
 }
 
 if (isset($files))
 {
-	$orderList = json_decode($_POST['json']);
+	$orderList = json_decode($_POST['json'], true);
 	dbconnect();
 	$the_files = array();
 	$i = 0;
 	foreach ($files as $file)
 	{
+		$key = array_search($file["name"], $orderList);
+		echo $key;
 		$the_file = file_get_contents($file["tmp_name"]);
-		file_put_contents($path.microtime().'-'.$file["name"], $the_file);
+		file_put_contents($path.$key.'-'.$file["name"], $the_file);
 		$i++;
 	}
 }
