@@ -20,7 +20,6 @@ function render_plugin(){
 	$ini = parse_ini_file("settings.ini");
 	$mailer_path = $ini['mailer'];
 	$header_url = $ini['header'];
-	wp_enqueue_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	wp_enqueue_script('jqueryui',  plugins_url('js/vendor/jquery-ui-1.10.3.custom.min.js', __FILE__));
 	wp_enqueue_script('dropzone',  plugins_url('js/vendor/dropzone.js', __FILE__));
 	wp_enqueue_script('main', plugins_url('js/main.js', __FILE__));
@@ -49,7 +48,6 @@ function render_plugin(){
             	</div>
             </form>
           </div>';
-     xdebug_break();
     if( isset($_POST['publish']))
     {
     	global $wpdb;
