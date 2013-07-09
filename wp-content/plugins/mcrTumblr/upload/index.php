@@ -1,8 +1,8 @@
 <?php
-
+$ini = parse_ini_file("../settings.ini");
 $files =$_FILES;
 
-$path = "/Users/jameshickey/Projects/mcr/wp-content/uploads/current/";
+$path = $ini['upload_path'];
 if (!file_exists($path)) {
     mkdir($path);
 }

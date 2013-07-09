@@ -17,6 +17,9 @@ function tumblr_upload (){
 }
 
 function render_plugin(){
+	$ini = parse_ini_file("settings.ini");
+	$mailer_path = $ini['mailer'];
+	$header_url = $ini['header'];
 	wp_enqueue_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	wp_enqueue_script('jqueryui',  plugins_url('js/vendor/jquery-ui-1.10.3.custom.min.js', __FILE__));
 	wp_enqueue_script('dropzone',  plugins_url('js/vendor/dropzone.js', __FILE__));
@@ -77,7 +80,7 @@ function render_plugin(){
         </tr>
         <tr>
             <td>
-				<img src='http://localhost:8888/mcr.jpg' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
+				<img src='".$header_url."' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
                 <div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px; margin-bottom: 25px;'><br>".$the_post['email_header']."</div>";
 		$i = 1;
 		foreach ($the_files as $value) {
@@ -108,7 +111,7 @@ function render_plugin(){
 			$html.="</td>
         </tr>
     </table>
-    <a href='http://localhost:8888/mail/public/unsubscribe/-email-'>Unsubscribe</a>
+    <a href='".$mailer_path."unsubscribe/-email-'>Unsubscribe</a>
 </body>
 </html>
 ";
@@ -143,7 +146,7 @@ function postEmailTemplate($template){
 	$ch = curl_init();
 
 //set the url, number of POST vars, POST data
-curl_setopt($ch,CURLOPT_URL, 'http://127.0.0.1:8888/mail/public/template/1');
+curl_setopt($ch,CURLOPT_URL, $mailer_path.'template/1');
 curl_setopt($ch,CURLOPT_POST, 2);
 curl_setopt($ch,CURLOPT_POSTFIELDS, $template);
 //execute post

@@ -6,7 +6,6 @@ function submitForm(){
 }
 
 jQuery(document).ready(function(){
-	//jQuery.get('http://localhost:8888/digitalstylistreport/wp-content/plugins/mcrTumblr/upload/index.php?delete=true');
 	jQuery('#loading-div').hide();
 	jQuery('#done-div').hide();
 	jQuery( ".sortable" ).sortable();
