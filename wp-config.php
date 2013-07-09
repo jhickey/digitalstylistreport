@@ -22,7 +22,7 @@ define('DB_NAME', 'wp_stylistnetwork');
 define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'root');
+define('DB_PASSWORD', 'as8retg9as48ft6');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');

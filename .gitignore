@@ -16,4 +16,5 @@ xcuserdata
 # svn & cvs
 .svn
 CVS
-wp-content/plugins/mcr/uploads/*
+wp-content/uploads/*
+wp-content/plugins/mcrTumblr/settings.ini
