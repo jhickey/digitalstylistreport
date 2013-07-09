@@ -52,72 +52,71 @@ function render_plugin(){
     if( isset($_POST['publish']))
     {
     	global $wpdb;
+	    $the_post = $_POST;
+	    $upload_dir = wp_upload_dir();
+	    $the_time = time();
+	    $the_base = $upload_dir['basedir'];
+	    $old_vote_page = get_page_by_title( 'Vote' );
+		$vote_id = $old_vote_page->ID;
+		$the_files = directoryToArray('current', $the_time, $the_base);
+		$the_files = array_values($the_files);
+		sort($the_files);
+		$html = "<html xmlns='http://www.w3.org/1999/xhtml'>
+	<head>
+	    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	    <title>Mark Curtis Project</title>
+	</head>
+	<body>
+	<singleline></singleline>
+	    <table width='800' border='0' cellspacing='0' cellpadding='0' style='padding: 25px; margin:0 auto;'>
+	        <tr id='header'>
+	            <td>&nbsp;</td>
+	      </tr>
+	        <tr>
+	            <td>
+	                <p style='font-family:\"Helvetica\"; font-weight:bold; font-size: 14px; line-height: 16px;'>
+	                    </p>
+	                              </td>
+	        </tr>
+	        <tr>
+	            <td>
+					<img src='".$header_url."' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
+	                <div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px; margin-bottom: 25px;'><br>".$the_post['email_header']."</div>";
+			$i = 1;
+			foreach ($the_files as $value) {
+				$url = $upload_dir['baseurl'].'/'.$the_time.'/'.$value;
+				$wpdb->query("INSERT INTO wp_mcr_files (url, time) VALUES ('$url', '$the_time')");
+				$the_id = $wpdb->insert_id;
+				$my_post = array(
+					'post_title'    => $the_post["sub_".$value].' <a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a>',
+					'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br>',
+					'post_status'   => 'publish',
+					'post_author'   => 1,
+				);
+				$html.="<div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px;'>
+	                    <p class='title' style='width:100%; float:left; border-bottom:4px solid #292929;'>
+	                        <span class='count' style='font-size:20px;'>".$i.".</span> ".$my_post['post_title']."</p>
+	                    ".$my_post['post_content']."</div>";
+				$post_id = wp_insert_post($my_post);
+				$wpdb->query("UPDATE wp_mcr_files set post='$post_id' WHERE id='$the_id'");
+				$i++;
+	    	}
+	    		$old_vote_page = get_page_by_title( 'Vote' );
+				$my_vote_page = array(
+					'ID'    => $vote_id,
+					'post_name' => $the_time
+				);
+				wp_update_post($my_vote_page);
 
-    	$the_post = $_POST;
-    	$upload_dir = wp_upload_dir();
-    	$the_time = time();
-    	$the_base = $upload_dir['basedir'];
-    	$old_vote_page = get_page_by_title( 'Vote' );
-	$vote_id = $old_vote_page->ID;
-	$the_files = directoryToArray('current', $the_time, $the_base);
-	$the_files = array_values($the_files);		
-	sort($the_files);
-	$html = "<html xmlns='http://www.w3.org/1999/xhtml'>
-<head>
-    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <title>Mark Curtis Project</title>
-</head>
-<body>
-<singleline></singleline>
-    <table width='800' border='0' cellspacing='0' cellpadding='0' style='padding: 25px; margin:0 auto;'>
-        <tr id='header'>
-            <td>&nbsp;</td>
-      </tr>
-        <tr>
-            <td>
-                <p style='font-family:\"Helvetica\"; font-weight:bold; font-size: 14px; line-height: 16px;'>
-                    </p>
-                              </td>
-        </tr>
-        <tr>
-            <td>
-				<img src='".$header_url."' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
-                <div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px; margin-bottom: 25px;'><br>".$the_post['email_header']."</div>";
-		$i = 1;
-		foreach ($the_files as $value) {
-			$url = $upload_dir['baseurl'].'/'.$the_time.'/'.$value;
-			$wpdb->query("INSERT INTO wp_mcr_files (url, time) VALUES ('$url', '$the_time')");
-			$the_id = $wpdb->insert_id;
-			$my_post = array(
-				'post_title'    => $the_post["sub_".$value],
-				'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br><a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a>',
-				'post_status'   => 'publish',
-				'post_author'   => 1,
-			);
-			$html.="<div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px;'>
-                    <p class='title' style='width:100%; float:left; border-bottom:4px solid #292929;'>
-                        <span class='count' style='font-size:20px;'>".$i.".</span> ".$my_post['post_title']."</p>
-                    ".$my_post['post_content']."</div>";
-			$post_id = wp_insert_post($my_post);
-			$wpdb->query("UPDATE wp_mcr_files set post='$post_id' WHERE id='$the_id'");
-			$i++;
-    	}
-    		$old_vote_page = get_page_by_title( 'Vote' );
-			$my_vote_page = array(
-				'ID'    => $vote_id,
-				'post_name' => $the_time
-			);
-			wp_update_post($my_vote_page);
-
-			$html.="</td>
-        </tr>
-    </table>
-    <a href='".$mailer_path."unsubscribe/-email-'>Unsubscribe</a>
-</body>
-</html>
-";
-	postEmailTemplate(array('html'=>$html, 'subject'=>$the_post['subject']));
-    }
+				$html.="</td>
+	        </tr>
+	    </table>
+	    <a href='".$mailer_path."unsubscribe/-email-'>Unsubscribe</a>
+	</body>
+	</html>
+	";
+		postEmailTemplate(array('html'=>$html, 'subject'=>$the_post['subject']));
+	    }
 }
 
 function directoryToArray($directory, $time, $base) {
