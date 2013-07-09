@@ -42,6 +42,7 @@ function render_plugin(){
 						<button id="submit_button">Publish</button>
 						<input type="hidden" name="publish", value="true"/>
 					<button class="btn" id="btn-clear">Clear</button><br />
+					<a href="http://mailsender.dev.enternewmedia.com/public/" target="_blank">Open Mailer</a>
 
 					<div id="loading-div">Uploading, please wait. <img src="'.plugins_url('mcrTumblr/img/ajax-loader.gif').'" /></div>
 					<div id="done-div">Upload is complete!</div>
@@ -57,9 +58,11 @@ function render_plugin(){
     	$the_time = time();
     	$the_base = $upload_dir['basedir'];
     	$old_vote_page = get_page_by_title( 'Vote' );
-		$vote_id = $old_vote_page->ID;
-		$the_files = directoryToArray('current', $the_time, $the_base);
-		$html = "<html xmlns='http://www.w3.org/1999/xhtml'>
+	$vote_id = $old_vote_page->ID;
+	$the_files = directoryToArray('current', $the_time, $the_base);
+	$the_files = array_values($the_files);		
+	sort($the_files);
+	$html = "<html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <title>Mark Curtis Project</title>
@@ -144,7 +147,7 @@ function postEmailTemplate($template){
 	$ch = curl_init();
 
 //set the url, number of POST vars, POST data
-curl_setopt($ch,CURLOPT_URL, $mailer_path.'template/1');
+curl_setopt($ch,CURLOPT_URL, 'http://mailsender.dev.enternewmedia.com/public/template/1');
 curl_setopt($ch,CURLOPT_POST, 2);
 curl_setopt($ch,CURLOPT_POSTFIELDS, $template);
 //execute post

@@ -39,12 +39,8 @@ jQuery(document).ready(function(){
 		jQuery('button').attr('disabled','disabled');
 	});
 	myDropzone.on("success", function(file) {
-		jQuery('#loading-div').hide();
-        jQuery('button').removeAttr('disabled');
-        //jQuery('#fileDropTarget').html('');
-        jQuery('#done-div').show();
-        setInterval(function(){jQuery('#done-div').fadeOut('fast');},1000);
-        submitForm();
+        var t=setTimeout(function(){submitForm()},5000)
+
     });
     myDropzone.on("error", function(file) {
 			alert('error!');
