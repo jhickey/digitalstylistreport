@@ -12,7 +12,7 @@
 add_action( 'admin_menu', 'tumblr_upload' );
 
 function tumblr_upload (){
-	add_options_page( 'MCR Upload Options', 'MCR Upload', 'manage_options', 'tumblr-upload-plugin', 'render_plugin' );
+	add_menu_page( 'MCR Upload Options', 'MCR Upload', 'manage_options', 'tumblr-upload-plugin', 'render_plugin' );
 
 }
 
@@ -88,7 +88,7 @@ function render_plugin(){
 				$wpdb->query("INSERT INTO wp_mcr_files (url, time) VALUES ('$url', '$the_time')");
 				$the_id = $wpdb->insert_id;
 				$my_post = array(
-					'post_title'    => $the_post["sub_".$value].' <a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a>',
+					'post_title'    => $the_post["sub_".$value].' <br><small><a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a></small>',
 					'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br>',
 					'post_status'   => 'publish',
 					'post_author'   => 1,
