@@ -83,21 +83,45 @@ function render_plugin(){
 					<img src='".$header_url."' alt='Image 1' width='800' height='78' style='clear:both; display:block;' />
 	                <div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px; margin-bottom: 25px;'><br>".$the_post['email_header']."</div>";
 			$i = 1;
+			var_dump($the_files);
 			foreach ($the_files as $value) {
 				$url = $upload_dir['baseurl'].'/'.$the_time.'/'.$value;
+				$file = $upload_dir['basedir'].'/'.$the_time.'/'.$value;
 				$wpdb->query("INSERT INTO wp_mcr_files (url, time) VALUES ('$url', '$the_time')");
 				$the_id = $wpdb->insert_id;
+				// $my_post = array(
+				// 	'post_title'    => $the_post["sub_".$value].' <br><small><a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a></small>',
+				// 	'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br>',
+				// 	'post_status'   => 'publish',
+				// 	'post_author'   => 1,
+				// );
+				$image_data = file_get_contents($url);
+				$filename = basename($url);
 				$my_post = array(
-					'post_title'    => $the_post["sub_".$value].' <br><small><a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a></small>',
-					'post_content'  => '<img src="'.$url.'" width="800" style="clear:both; display:block;"/><br>'.$the_post["body_".$value].'<br>',
-					'post_status'   => 'publish',
-					'post_author'   => 1,
+				    'post_title' => $the_post["sub_".$value].' <br><small><a href="'.home_url().'?page_id='.$vote_id.'&i='.$the_id.'&u=-email-">Vote for this!</a></small>',
+				    'post_content' => '',
+				    'post_status' => 'publish'
 				);
+				$attachment = array(
+				    'post_title' => $filename,
+				    'post_content' => '',
+				    'post_status' => 'inherit',
+				    'pist_mime_type' => 'image/jpeg'
+				);
+				$post_id = wp_insert_post($my_post);
+				$attach_id = wp_insert_attachment( $attachment, $file, $post_id);
+				var_dump($file);
+				require_once(ABSPATH . 'wp-admin/includes/image.php');
+				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+				wp_update_attachment_metadata( $attach_id, $attach_data );
+
+				set_post_thumbnail( $post_id, $attach_id );
+
+
 				$html.="<div class='image-container' style='font-family:\"Helvetica\"; font-weight:bold; font-size:14px; line-height:22px;'>
 	                    <p class='title' style='width:100%; float:left; border-bottom:4px solid #292929;'>
 	                        <span class='count' style='font-size:20px;'>".$i.".</span> ".$my_post['post_title']."</p>
 	                    ".$my_post['post_content']."</div>";
-				$post_id = wp_insert_post($my_post);
 				$wpdb->query("UPDATE wp_mcr_files set post='$post_id' WHERE id='$the_id'");
 				$i++;
 	    	}
